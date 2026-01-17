@@ -49,7 +49,176 @@
 </head>
 <body>
     <header class = "container">
+        <nav>
+            <ul>
+                <li><strong>🩺 MediBias</strong></li>
+            </ul>
 
+            <ul>
+                <li><a href="#" onclick = "showSection('home')">Home</a></li>
+                <li><a href="#" onclick = "showSection('stats')">Inclusivity Stats</a></li>
+                <li><a href="#" onclick = "showSection('tracker')">Inclusivity Tracker</a></li> 
+                <li><a href="#" onclick = "showSection('DX')">Diagnostic Tool</a></li>
+                <li><a href="#" onclick = "showSection('silence')">The Silence Gallery</a></li>
+                <li><a href="#" onclick = "showSection('future')">Future Plans</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class = "container">
+        <section id="home" class = "active">
+            <hgroup>
+                <h1>Eliminating Systemic Bias in Medical Research and Practice</h1>
+                <h2>Why our mission matters for healthcare equality </h2>
+            </hgroup>
+            <p>
+                Systemic bias in medical research and practice has long been a barrier to equitable healthcare. 
+                Underrepresentation of certain demographics in clinical trials, biased diagnostic tools, and 
+                unequal access to treatments contribute to disparities in health outcomes. At MediBias, we are 
+                dedicated to identifying these biases and promoting inclusivity in medical research and practice.
+            </p>
+        </section>
+
+        <section id="stats">
+            <h2>Medical Research Inclusivity Statistics</h2>
+            <p>Search our database of recent research data to see female representation levels.</p>
+            <input type="Search" id="statSearch" name = "Search"placeholder="Search by drug or condition...">
+            <figure>
+                <table role = "grid">
+                    <thead>
+                        <tr>
+                            <th scope = "col"> Research Topic & Impact</th>
+                            <th scope = "col"> Women (%)</th>
+                            <th scope = "col"> Age Range</th>
+                            <th scope = "col"> Sex-Specific Dose</th>
+                        </tr>   
+                    </thead>
+                    <tbody id = "statsTable">
+                        </tbody>
+                </table>
+            </figure>   
+        </section>
+
+        <section id="tracker">
+            <h2>The Inclusivity Tracker</h2>
+            <p>For Researchers: Input your study parameters to calculate your research inclusivity grade.</p>
+            <form id="graderForm">
+                <label>Research Area<input type = "text" placeholder = "e.g. ADHD"></label>
+                <div class = "grid">
+                    <label>Men in Study<input type = "number" id = "menCount" value = "0"></label>
+                    <label>Women in Study<input type = "number" id = "womenCount" value = "0"></label>
+                </div>
+                <label><input type = "checkbox" id = "g1"> Considered sex-specific biological measures (Hormones, cycles, pregnancy)</label>
+                <label><input type = "checkbox" id = "g2"> Sex-specific dosing or dose analysis conducted</label>
+                <label><input type = "checkbox" id = "g3"> Used sex-specific diagnostic criteria or subgroup analysis</label>
+                <button type = "button" onclick = "calculateGrade()">Calculate Inclusivity Grade</button>
+            </form>
+            <div id = "GradeOutput"></div>
+            </section>
+
+        <section id="DX">
+            <h2>Clinical Diagnostic Tool</h2>
+            <p>For Doctors: Use this diagnostic tool to refine the diagnosis process for suspected conditions.</p>
+            <article>
+                <form id = "dxForm">
+                    <label>Primary Symptoms Noticed <textarea placeholder = "e.g. bloating, cramping..."></textarea></label>
+                    <button type="button" onclick="generateDxQuestions()">Analyze Patient Symptoms</button>
+                </form>
+                <div id="dxQuestions" style="display:none;">
+                    <hr>
+                    <h5>Follow-up Diagnostic Questions:</h5>
+                    <ul>
+                        <li>On a scale of 1-10, how debilitating are the menstrual cramps?</li>
+                        <li>On a scale of 1-10, how heavy is the bleeding (clotting/duration)?</li>
+                        <li>Are secondary symptoms present, such as chronic migraines or lower back pain?</li>
+                        <li>How regular is the menstrual cycle, and does pain persist outside of the period?</li>
+                        <li>Does the patient experience pain during bowel movements or intercourse?</li>
+                    </ul>
+                    <small><i>Note: These questions target common signs of Endometriosis often dismissed as "normal" period pain.</i></small>
+                </div>
+            </article>
+        </section>
+
+        <section id="silence">
+            <h2>The Silence Gallery</h2>
+            <p>A collection of stories and case studies highlighting overlooked groups in medical research. Evidence of life-threatning neglect in women's healthcare research.</p>
+            <div class = "grid">
+                <article>
+                    <header><strong> The Ambien Scale</strong></header>
+                    <p>Women were prescribed the same dose as men for decades before the FDA realized women metabolize it much slower, leading to high accident rates.</p> 
+                </article>
+                <article>
+                    <header><strong> Heart Attack Gap</strong></header>
+                    <p>Research papers confirm women are 50% more likely to be misdiagnosed because "atypical" symptoms aren't part of standard training.</p> 
+                </article>
+            </div>
+            <article>
+                <header><strong> Refrences </strong></header>
+                <ul>
+                    <li> "Sex Bias in Preclinical Research" - <i>Nature (2010)</i></li>
+                    <li> "Sex Bias in Preclinical Research" - <i>Nature (2010)</i></li>
+                </ul>
+            </article>        
+        </section>
+
+        <section id="future">
+            <h2>Future Development Roadmap</h2>
+            <ul>
+                <li><strong>AI Patient Advocacy:</strong> An AI bot to help women prepare for doctor visits to ensure their pain isn't dismissed.</li>
+                <li><strong>API Integration:</strong> Connecting directly to PubMed to pull live inclusivity stats.</li>
+                <li><strong>Policy Whitepaper:</strong> Using the data from our "Inclusivity Tracker" to lobby for legislative change in drug trial mandates.</li>
+            </ul>
+        </section>
+    </main>
+    <script>
+        // Section Navigation Logic
+        function showSection(Id) {
+            document.querySelectorAll('selection').forEach(s => s.classList.remove('active'));
+            document.getElementById(Id).classList.add('active');
+        }
+
+        // Stats Logic
+        const statsData = [
+            { topic: "Heart Disease", women: "34%", race: "Moderate", hormone: "Rarely" },
+            { topic: "Ambien", women: "40%", race: "Low", hormone: "No" },
+            { topic: "ADHD", women: "21%", race: "Low", hormone: "No" }
+        ];
+
+        function renderStats(data) {
+            const tableBody = document.getElementById("statsTable");   //Target
+            body.innerHTML = data.map(i => `
+                <tr>
+                    <td>${i.topic}</td>
+                    <td>${i.women}</td>
+                    <td>${i.race}</td>
+                    <td>${i.hormone}</td>
+                </tr>
+            `).join('');
+        }
+
+        //Grader Logic
+        function calculateInclusivityGrade() {
+            let score = 0;
+            const w = parseInt(document.getElementById('womenCount').value) || 0;
+            const m = parseInt(document.getElementById('menCount').value) || 0;
+            
+            if (w + m > 0) score += Math.min(40, (w / m) * 40);
+            if (document.getElementById('g1').checked) score += 20;
+            if (document.getElementById('g2').checked) score += 20;
+            if (document.getElementById('g3').checked) score += 20;
+
+            let grade = score > 95 ? 'A+' : score > 90 ? 'A' : score > 85 ? 'A-' : score > 80 ? 'B+' : score > 75 ? 'B' : score > 70 ? 'B-' : score > 65 ? 'C+' : score > 60 ? 'C' : score > 55 ? 'C-' : score > 50 ? 'D+' : score > 45 ? 'D' : score > 40 ? 'D-' : 'F';
+            document.getElementById('gradeOutput').innerHTML = `<div class="result-box"><h3>Grade: ${grade}</h3><p>Inclusivity Score: ${Math.round(score)}/100</p></div>`;
+        }
+
+        // DX Logic
+        function generateDxQuestions() {
+            document.getElementById('dxQuestions').style.display = 'block';
+        }
+
+        // Initial Load
+        renderStats(statsData);
+    </script>
 </body>
 
-
+</html>
