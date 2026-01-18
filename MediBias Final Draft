@@ -1,1 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset = "UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediBias | Eliminating Systemic Bias</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@latest/css/pico.min.css">
 
+    <style>
+        /* Custom styles for MediBias */
+        :root {
+            --primary-color: #321856;
+        }
+
+        .menu-icon {
+            font-size: 2rem;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: white;
+            padding: 5px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(50, 24, 86, 0.75);
+            z-index: 1000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-overlay a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 15px 0;
+            text-decoration: none;
+        }
+
+        section { display: none; padding: 40px 0;}
+        section.active {display: block;}
+
+        .symptom-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /*.impact-text {
+            font-size: 0.85rem;
+            color: #555;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .grade-a { color: #2ecc71; font-weight: bold; }
+        .grade-c { color: #f39c12; font-weight: bold; }
+        .grade-f { color: #e74c3c; font-weight: bold; }
+
+        section {
+            padding : 40px 0;
+        }*/
+
+        .hero {
+            background: linear-gradient(135deg, #C9AFE4 0%, #ffffff 100%);
+            border-radius: 8px;
+            padding: 60px 40px;
+            margin-bottom: 40px;
+        }
+
+        .result-box {
+            padding: 1.5rem;
+            border-radius: 8px;
+            background-color: #C9AFE4;
+            border-left: 5px solid var(--primary-color);
+            margin-top: 1rem;
+            color: #321856;
+        }
+        
+        .hidden { display: none; }
+
+        </style>
+</head>
+<body>
+    <div class = "menu-icon" onclick = "toggleMenu()">☰</div>
+    <div id="menuOverlay" class = "menu-overlay">
+        <a href="#" onclick=" showSection('home')">Home</a>
+        <a href="#" onclick=" showSection('stats')">Research Statistics</a>
+        <a href="#" onclick=" showSection('tracker')">Inclusivity Checker</a>
+        <a href="#" onclick=" showSection('DX')">The Research Equity Lens</a>
+        <a href="#" onclick=" showSection('silence')">The Silence Gallery</a>
+        <a href="#" onclick=" showSection('future')">Future Plans</a>
+        <a href = "#" onclick="toggleMenu()" style = "font-size: 1rem; color: #ccc;">Close Menu ✕</a>
+    </div>
+    
+    
+    <header class = "container">
+        <nav>
+            <ul>
+                <li><strong style = "font-size: 2.2rem; color: #321856">🩺 MediBias</strong></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class = "container">
+        <section id="home" class = "active">
+            <div class = "hero">
+                <h1>Eliminating Systematic Bias in Medical Research and Practice</h1>
+                <h4 style = "color: #6935B3">Why our mission matters for healthcare equality </h4>
+            </div>
+            
+            <p>
+                For decades, medical research has operated on a "male-as-default" model. This systematic bias in research and practice has long been a barrier to equitable healthcare. Because women are frequently underrepresented in clinical trials, researchers often fail to consider sex-specific biological variables—such as hormonal cycles or different body structures—that drastically change how a body reacts to treatment.
+            </p>
+            <p>
+                The Consequences of Exclusion When a drug's dosage or a medical device's safety is tested primarily on men, the results are fundamentally biased. This leads to dangerous situations where women are prescribed medications that may be ineffective or even gravely dangerous due to higher toxicity levels or adverse reactions. A prime example is The Ambien Scale: women were prescribed the same dose as men for decades before it was discovered they metabolize the drug much slower, leading to a significantly higher rate of accidents.
+            </p>
+            <p>
+                Our Solution At MediBias, we are dedicated to identifying these biases and promoting inclusivity in medical research and practice. Our platform provides:
+            </p>
+            <div class = "grid">
+                <a href="#stats" onclick="showSection('stats')" style="text-decoration: none; color: inherit;">
+                    <article style = "background-color: #DECFED;">
+                        <header style = "background-color: #D3BFE8;"><strong>Past - Research Statistics </strong></header>
+                        <p style = "color: #6935B3">A searchable database showing the current representation levels in medical research.</p> 
+                    </article>
+                </a>
+                <a href="#tracker" onclick="showSection('tracker')" style="text-decoration: none; color: inherit;">
+                    <article style = "background-color: #DECFED;">
+                        <header style = "background-color: #D3BFE8;"><strong> Present - The Inclusivity Checker </strong></header>
+                        <p style = "color: #6935B3">A tool for researchers to calculate their "Inclusivity Grade" based on sex-specific biological measures and dosing analysis.</p> 
+                    </article>
+                </a>
+                <a href="#DX" onclick="showSection('DX')" style="text-decoration: none; color: inherit;">
+                    <article style = "background-color: #DECFED;">
+                        <header style = "background-color: #D3BFE8;"><strong> Future - The Research Equity Lens </strong></header>
+                        <p style = "color: #6935B3">MediBias addresses systemic medical research bias by providing tools like the "Research Equity Lens" to ensure inclusive, sex-specific data collection.</p>    
+                    </article>
+                </a>    
+            </div>
+        </section>
+
+        <section id="stats">
+            <div class = "hero">
+                <h2>Medical Research Inclusivity Statistics</h2>
+            </div>
+            <p style="color: #9062CA">Search our database for recent researches about diseases, mental illness or vaccines and their impact on female.</p>
+            <input type="search" id="statSearch" placeholder="Search by drug..." oninput="filterStats()">
+            <figure>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="color: #6935B3">Research Topic & Impact</th>
+                            <th style="color: #6935B3">Women (%)</th>
+                            <th style="color: #6935B3">Age Range</th>
+                            <th style="color: #6935B3">Description</th>
+                        </tr>   
+                    </thead>
+                    <tbody id = "statsTable"></tbody>
+                </table>
+            </figure>   
+        </section>
+
+        <section id="tracker">
+            <div class = "hero">
+                <h2>The Inclusivity Checker</h2>
+            </div>
+            <p>For Researchers: Input your study parameters to calculate your research inclusivity grade.</p>
+            <form id="graderForm">
+                <label style = "color: #6935B3"><b>Research Area</b><input type = "text" placeholder = "e.g. ADHD"></label>
+                <div class = "grid">
+                    <label style = "color: #6935B3"><b>Men in Study</b><input type = "number" id = "menCount" value = "0" min="0"></label>
+                    <label style = "color: #6935B3"><b>Women in Study</b><input type = "number" id = "womenCount" value = "0" min="0"></label>
+                </div>
+                <label style = "color: #9062CA"><input type = "checkbox" id = "g1"> Considered sex-specific biological measures (Hormones, cycles, pregnancy)</label>
+                <label style = "color: #9062CA"><input type = "checkbox" id = "g2"> Sex-specific dosing or dose analysis conducted</label>
+                <label style = "color: #9062CA"><input type = "checkbox" id = "g3"> Used sex-specific diagnostic criteria or subgroup analysis</label>
+                <button type = "button" onclick = "calculateInclusivityGrade()" style = "background-color: #6935B3" >Calculate Inclusivity Grade</button>
+            </form>
+            <div id = "gradeOutput"></div>
+            </section>
+        <section id="DX">
+            <div class = "hero">
+                <h2>The Research Equity Lens</h2>
+            </div>
+            <p>Our platform improves the scientific rigor of studies by providing targeted follow-up criteria for specific conditions like Endometriosis. This section ensures that researchers look beyond surface-level data to capture a more complete biological picture:</p>
+            <ul>
+                <li style = "color: #6935B3"><strong>Captures Overlooked Biological Markers:</strong> Prompts researchers to include data on cyclical systemic symptoms (bowel, bladder, and referred pain) often ignored in traditional "male-centric" study designs.</li>
+                <li style = "color: #6935B3"><strong>Refines Patient Stratification:</strong> Helps researchers categorize participants not just by gender, but by specific symptom clusters and life-impact metrics to ensure more accurate subgroup analysis.</li>
+                <li style = "color: #6935B3"><strong>Standardizes Inclusive Methodology:</strong> Provides a framework for researchers to report race, family history, and long-term diagnostic delays, ensuring the research reflects the true diversity of the patient population.</li>
+            </ul>
+            <div class = "symptom-grid">
+                <label><input type = "checkbox"> Pelvic Pain </label>
+                <label><input type = "checkbox"> Bloating </label>
+                <label><input type = "checkbox"> Fainting </label>
+                <label><input type = "checkbox"> Vomiting </label>
+                <label><input type = "checkbox"> Back Pain </label>
+                <label><input type = "checkbox"> Digestive issues </label>
+                <label><input type = "checkbox"> Fatigue </label>
+                <label><input type = "checkbox"> Emotional changes </label>
+                <label><input type = "checkbox"> Leg pain </label>
+            </div>    
+
+            <button onclick = "showFollowUp()" style = "background-color: #6935B3">Submit Assessment</button>
+            <div id="followUpSection" class="hidden">
+            <h3>    </h3>
+            <h3>Follow-Up Questions</h3>
+                <hr>
+                <label>Is your daily routine/work/school disrupted due to period pain?
+                    <select onchange="toggleFollowUp(this, 'sexualHealthQuestions')">
+                        <option value="no" style = "color: #6935B3">No</option>
+                        <option value="yes" style = "color: #6935B3">Yes</option>
+                    </select>
+                </label>
+                <div id="sexualHealthQuestions" class="hidden">
+                    <article>
+                        <ul>
+                            <li style = "color: #9062CA">Were you diagnosed with anxiety or depression before this pain was investigated?</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <label>Do you experience pain with bowel movements during menstruation?
+                    <select onchange="toggleFollowUp(this, 'bowel')">
+                        <option value="no" style = "color: #6935B3">No</option>
+                        <option value="yes" style = "color: #6935B3">Yes</option>
+                    </select>
+                </label>
+                <div id="bowel" class="hidden">
+                    <article>
+                        <ul>
+                            <li style = "color: #9062CA">Have you been diagnosed with IBS without proper imaging or laparoscopy?</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <label>Pain with urination during menstruation?
+                    <select onchange="toggleFollowUp(this, 'urinary')">
+                        <option value="no" style = "color: #6935B3">No</option>
+                        <option value="yes" style = "color: #6935B3">Yes</option>
+                    </select>
+                </label>
+                <div id="urinary" class="hidden">
+                    <article>
+                        <ul>
+                            <li style = "color: #9062CA">Recurrent UTI symptoms with negative cultures?</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <label>Do you have any known family history of endometriosis/severe period pain?
+                    <select onchange="toggleFollowUp(this, 'familyHistory')">
+                        <option value="no" style = "color: #6935B3">No</option>
+                        <option value="yes" style = "color: #6935B3">Yes</option>
+                    </select>
+                </label>
+                <div id="familyHistory" class="hidden">
+                    <article>
+                        <ul>
+                            <li style = "color: #9062CA">Is there any history in your family related to hysterectomy?</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <label>When exactly did you experience pain before, after or between periods?
+                    <select onchange="toggleFollowUp(this, 'periods')">
+                        <option value="no" style = "color: #6935B3">No</option>
+                        <option value="yes" style = "color: #6935B3">Yes</option>
+                    </select>
+                </label>
+                <div id="periods" class="hidden">
+                    <article>
+                        <ul>
+                            <li style = "color: #9062CA">Does the pain flare predictably or unpredictably at certain points in your cycle?</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <label>Have you experienced pain during or after sexual intercourse?
+                    <select onchange="toggleFollowUp(this, 'intercourse')">
+                        <option value="no" style = "color: #6935B3">No</option>
+                        <option value="yes" style = "color: #6935B3">Yes</option>
+                    </select>
+                </label>
+                <div id="intercourse" class="hidden">
+                    <article>
+                        <ul>
+                            <li style = "color: #9062CA">Is the pain deep, sharp or lingering?</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <label>Have you attempted to concieve for over 6 to 12 months?
+                    <select onchange="toggleFollowUp(this, 'miscarriage')">
+                        <option value="no" style = "color: #6935B3">No</option>
+                        <option value="yes" style = "color: #6935B3">Yes</option>
+                    </select>
+                </label>
+                <div id="miscarriage" class="hidden">
+                    <article>
+                        <ul>
+                            <li style = "color: #9062CA">Any miscarriages or incidents of infertility?</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="silence">
+            <div class = "hero">
+                <h2>The Silence Gallery</h2>
+            </div>
+            <p>A collection of stories and case studies highlighting overlooked groups in medical research. Evidence of life-threatning neglect in women's healthcare research.</p>
+            <div class = "grid">
+                <article>
+                    <header><strong> Harvard Medical School Study </strong></header>
+                    <p style = "color: #6935B3">In 2022, a Harvard Medical School study finds that women, as of 2019, were still substantially underrepresented in clinical trials for leading diseases.</p> 
+                </article>
+                <article>
+                    <header><strong> Thalidomide Case </strong></header>
+                    <p style = "color: #6935B3">In the late 1950s, in Europe and Australia thalidomide was marketed as a safe sedative for morning sickness, yet it caused a catastrophic medical tragedy. Over 10,000 babies were born with severe limb deformities, and thousands died, highlighting the devastating cost of excluding pregnant women from rigorous safety testing.</p> 
+                </article>
+            </div>
+            <div class = "grid">
+                <article>
+                    <header><strong> The Ambien Scale</strong></header>
+                    <p style = "color: #6935B3">Women were prescribed the same dose as men for decades before the FDA realized women metabolize it much slower, leading to high accident rates.</p> 
+                </article>
+                <article>
+                    <header><strong> Misdiagnosis of Pain and Autoimmune Diseases </strong></header>
+                    <p style = "color: #6935B3">Chronic pain is more prevalent in women, yet studies suggest it is sometimes undertreated compared to men, with women potentially receiving less pain medication after identical surgeries. This research neglect delays autoimmune and endometriosis diagnoses by years, forcing many into prolonged suffering or costly private care due to historically biased funding priorities.</p> 
+                </article>
+            </div>
+            <article>
+                <header><strong> Refrences </strong></header>
+                <ul>
+                    <li> "Pharma Almanac. (2024, April 1)." <i>Pain, misdiagnosis, and sutoimmune disease: Untangling Complexity and bias.</i> <a href="https://www.pharmasalmanac.com/articles/pain-misdiagnosis-and-autoimmune-disease-untangling-complexity-and-bias"></a></li>
+                    <li> "Balch, B. (2024, March 26)." <i>Why we know so little about women's health.</i> "AAMC" <a href="https://www.aamc.org/news/why-we-know-so-little-about-women-s-health"></a></li>
+                    <li> "Westergaard, D., Moseley, P., Sorup, F. K. H., Baldi, P., & Brunak, S. (2019)." <i>Population-wide analysis of differences in disease progression patterns in men and women. Nature Communications, 10(1), 1-14.</i><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4800017/#_ci93_"></a></li>
+                </ul>
+            </article>        
+        </section>
+
+        <section id="future">
+            <div class = "hero">
+                <h2>Future Development Roadmap</h2>
+            </div>
+            <ul>
+                <li style = "color: #6935B3"><strong>Expanded Data Integration:</strong> Incorporate more datasets covering a wider range of diseases, including both adult and pediatric conditions, to improve inclusivity metrics.</li>
+                <li style = "color: #6935B3"><strong>Disease Library Expansion:</strong> Add new conditions and other studies to the database, ensuring a broader view of gender and age-related research gaps.</li>
+                <li style = "color: #6935B3"><strong>Advanced Symptom Analysis:</strong> Develop tools to analyze a wider array of symptoms across populations to better detect underreported patterns, particularly in women and minorities.</li>
+                <li style = "color: #6935B3"><strong>Comprehensive Diagnostic Support:</strong> Expand the Diagnostic Tool so that when professionals enter more detailed and complex patient symptoms, it could automatically generate tailored follow-up diagnostic questions for multiple conditions beyond Endometriosis.</li>
+                <li style = "color: #6935B3"><strong>Predictive Bias Alerts:</strong> Implement an alert system that flags potential biases in new studies or clinical trials before publication, ensuring research inclusivity from the start.</li>
+                <li style = "color: #6935B3"><strong>Policy & Advocacy Integration:</strong> Use the enhanced data and diagnostic insights to support advocacy for equitable healthcare research policies.</li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        // Menu Toggle Logic
+        function toggleMenu() {
+            const overlay = document.getElementById('menuOverlay');
+            overlay.style.display = overlay.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Section Switcher
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            toggleMenu();    // Close menu after selection
+        }
+
+        //Diagnostic Logic
+        function toggleFollowUp(select, targetId) {
+            const target = document.getElementById(targetId);
+            target.classList.toggle("hidden", select.value !== "yes");
+        }
+
+
+        function toggleSexualHealth1() {
+            const status = document.getElementById('activeStatus').value;
+            document.getElementById('sexualHealthQuestions').className = (status === 'yes') ? '' : 'hidden';
+        }
+
+        function toggleSexualHealth2() {
+            const status = document.getElementById('activeStatus').value;
+            document.getElementById('bowel').className = (status === 'yes') ? '' : 'hidden';
+        }
+
+        function toggleSexualHealth3() {
+            const status = document.getElementById('activeStatus').value;
+            document.getElementById('urinary').className = (status === 'yes') ? '' : 'hidden';
+        }
+
+        function toggleSexualHealth4() {
+            const status = document.getElementById('activeStatus').value;
+            document.getElementById('familyHistory').className = (status === 'yes') ? '' : 'hidden';
+        }
+
+        function toggleSexualHealth5() {
+            const status = document.getElementById('activeStatus').value;
+            document.getElementById('periods').className = (status === 'yes') ? '' : 'hidden';
+        }
+
+        function toggleSexualHealth6() {
+            const status = document.getElementById('activeStatus').value;
+            document.getElementById('intercourse').className = (status === 'yes') ? '' : 'hidden';
+        }
+
+        function toggleSexualHealth7() {
+            const status = document.getElementById('activeStatus').value;
+            document.getElementById('miscarriage').className = (status === 'yes') ? '' : 'hidden';
+        }
+
+        function showFollowUp() {
+            document.getElementById('followUpSection').className = '';
+        }
+
+        // Stats Logic
+        const statsData = [
+            { topic: "COVID-19 Vaccine", women: "50.4%", age: "18+", description: "COVID-19 vaccine trials and early safety monitoring did not systematically collect or report women-specific outcomes (e.g., menstrual or reproductive effects), despite women generally showing higher vaccine uptake than men. This led to delayed recognition of sex-related impacts and gaps in guidance for women."},
+            { topic: "Ischemic Heart Disease", women: "35.37%", age: "20-64", description: "Heart disease surveillance and diagnosis historically rely on male-dominated data, leading to under-recognition of atypical female symptoms, like jaw or back pain, resulting in delayed treatment for women."},
+            { topic: "Stage 2 Hypertension", women: "45.4%", age: "20-79", description: "Hypertension data and diagnostic standards are largely derived from male-centric research, contributing to underdiagnosis and delayed treatment in women despite similar or rising risk levels."},
+            { topic: "ADHD", women: "33.24%", age: "0-18", description: "ADHD research and diagnostic criteria have historically focused on hyperactive/impulsive boys, causing girls with inattentive symptoms to be underdiagnosed and undertreated."},
+            { topic: "Epilepsy", women: "49.74%", age: "20-64", description: "Research and monitoring of epilepsy often prioritize male patterns, meaning misinterpretation or negligence in women’s seizures."}
+
+        ];
+
+        function filterStats() {
+            const val = document.getElementById('statSearch').value.toLowerCase();
+            const filtered = statsData.filter(item => item.topic.toLowerCase().includes(val));      
+            renderStats(filtered);
+        }
+
+        function renderStats(data) {
+            const body = document.getElementById("statsTable");   //Target
+            body.innerHTML = data.map(i => `
+                <tr>
+                    <td style="color: #111110"><b>${i.topic}</b></td>
+                    <td style="color: #111110">${i.women}</td>
+                    <td style="color: #111110">${i.age}</td>
+                    <td style="color: #111110">${i.description}</td>
+                </tr>
+            `).join('');
+        }
+
+
+        //Grader Logic
+        function calculateInclusivityGrade() {
+            let score = 0;
+            const w = parseInt(document.getElementById('womenCount').value) || 0;
+            const m = parseInt(document.getElementById('menCount').value) || 0;
+
+            if (w > 0 && m > 0 && w > m) score += Math.min(40, (m / w) * 40);
+            if (w > 0 && m > 0 && m > w) score += Math.min(40, (w / m) * 40);
+            if (w > 0 && m > 0 && m === w) score = 40;
+            if (document.getElementById('g1').checked && w > 0 && m > 0) score += 20;
+            if (document.getElementById('g2').checked && w > 0 && m > 0) score += 20;
+            if (document.getElementById('g3').checked && w > 0 && m > 0) score += 20;
+
+            let grade = score > 95 ? 'A+' : score > 90 ? 'A' : score > 85 ? 'A-' : score > 80 ? 'B+' : score > 75 ? 'B' : score > 70 ? 'B-' : score > 65 ? 'C+' : score > 60 ? 'C' : score > 55 ? 'C-' : score > 50 ? 'D+' : score > 45 ? 'D' : score > 40 ? 'D-' : score <= 0 ? 'N/A' : 'F';
+            document.getElementById('gradeOutput').innerHTML = `<div class="result-box"><h3>Grade: ${grade}</h3><p>Inclusivity Score: ${Math.round(score)}/100</p></div>`;
+        }
+        // Initial Load
+        renderStats(statsData);
+    </script>
+</body>
+
+</html>
